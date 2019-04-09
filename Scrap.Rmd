@@ -1,0 +1,91 @@
+---
+title: "Scrap"
+author: "Hans Bilger"
+date: "4/9/2019"
+output: html_document
+---
+
+```{r}
+# duration
+library(readxl)
+library(tidyverse)
+a <- read_excel("Gsor_IC_t-test_sex diff (all 10 pups).xlsx")
+male <- filter(a, sex=="male")
+male$duration <- as.data.frame(male$duration)
+female <- filter(a, sex=="female")
+female$duration <- as.data.frame(female$duration)
+female$duration <- 1000*female$duration
+male$duration <- 1000*male$duration
+
+ttable <- function (x,y){
+  
+t <- t.test(x, y, paired=FALSE, var.equal = TRUE)
+t <- nrow(male) + nrow(female) - 2
+
+mean_m <- mean(y)
+mean_f <- mean(x)
+means <- c(mean_f, mean_m)
+diff.means <- mean_f - mean_m
+sd_f <- sd(x)
+sd_m <- sd(y)
+n_f <- 5
+n_m <- 5
+
+var.pooled <- function(df1,df2,SD1,SD2){
+  (df1*SD1^2 + df2*SD2^2)/(df1+df2)
+}
+ 
+var.pooled <- var.pooled(4, 4, sd(x), sd(y))
+
+SE.diff <- function(var.pool, n1,n2){
+  sqrt(var.pool*(1/n1 + 1/n2))
+}
+
+SE.diff <- SE.diff(var.pooled, 5, 5)
+error <- qnorm(0.975)*SE.diff
+left <- (mean_f - mean_m) - error
+right <- (mean_f - mean_m) + error
+
+df <- c((t$statistic), t_df, t$p.value, diff.means, SE.diff, t$conf.int)
+df <- matrix(df, ncol=7)
+df <- as.data.frame(df)
+df <- select(df, t=1, df=2, "p-value"=3, "mean difference"=4, "SE of difference"=5, "95% CI of difference, lower"=6, "95% CI of difference, upper"=7)
+df
+}
+
+ttable(female$duration, male$duration)
+
+t <- t.test(female$duration, male$duration, paired=FALSE, var.equal = TRUE)
+t <- nrow(male) + nrow(female) - 2
+
+mean_m <- mean(male$duration)
+mean_f <- mean(female$duration)
+means <- c(mean_f, mean_m)
+diff.means <- mean_f - mean_m
+sd_f <- sd(female$duration)
+sd_m <- sd(male$duration)
+n_f <- 5
+n_m <- 5
+
+var.pooled <- function(df1,df2,SD1,SD2){
+  (df1*SD1^2 + df2*SD2^2)/(df1+df2)
+}
+ 
+var.pooled <- var.pooled(4, 4, sd(female$duration), sd(male$duration))
+
+SE.diff <- function(var.pool, n1,n2){
+  sqrt(var.pool*(1/n1 + 1/n2))
+}
+
+SE.diff <- SE.diff(var.pooled, 5, 5)
+error <- qnorm(0.975)*SE.diff
+left <- (mean_f - mean_m) - error
+right <- (mean_f - mean_m) + error
+
+df <- c((t$statistic), t_df, t$p.value, diff.means, SE.diff, t$conf.int)
+df <- matrix(df, ncol=7)
+df <- as.data.frame(df)
+df <- select(df, t=1, df=2, "p-value"=3, "mean difference"=4, "SE of difference"=5, "95% CI of difference, lower"=6, "95% CI of difference, upper"=7)
+df
+
+```
