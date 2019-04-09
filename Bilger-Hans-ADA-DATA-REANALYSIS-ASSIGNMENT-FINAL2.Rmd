@@ -1,5 +1,5 @@
 ---
-title: "Bilger-Hans-ADA-DATA-REANALYSIS-ASSIGNMENT-FINAL2"
+title: "Bilger-Hans-ADA-DATA-REANALYSIS-ASSIGNMENT"
 author: "Hans Bilger"
 date: "April 9, 2019"
 output: html_document
@@ -23,7 +23,7 @@ library(kableExtra)
 
 ##Introduction
 
-####I am reanalyzing data from the 2017 Behavior paper "Isolation call ontogeny in bat pups" by Engler et al. (2017). The authors look at the developmental trajectory of isolation call acoustics in the nectivorous bat species Glossophaga soricina. The authors studied 10 individuals in total. They solicited and recorded isolation calls from newborn bats in five day intervals over the first few weeks of life. They then measured a number of acoustica parameters in each calling bout and used a variety of analytical techniques (t-tests, linear mixed models, etc.) to trace how those parameters changed over time. They also used discriminant function analysis to test for an individual signature in the calls. Their results yielded strong support for the existence of such a signature, and showed significant ontogenetic change over time in a variety of acoustic variables. I will be reanalyzing the descriptive statistics, t-tests, and linear mixed  models for this project.
+####I am reanalyzing data from the 2017 Behavior paper "Isolation call ontogeny in bat pups" by Engler et al. (2017). The authors look at the developmental trajectory of isolation call acoustics in the nectivorous bat species Glossophaga soricina. The authors studied 10 individuals in total. They solicited and recorded isolation calls from newborn bats in five day intervals over the first few weeks of life. They then measured a number of acoustic parameters in each calling bout and used a variety of analytical techniques (t-tests, linear mixed models, etc.) to trace how those parameters changed over time. They also used discriminant function analysis to test for an individual signature in the calls. Their results yielded strong support for the existence of such a signature, and showed significant ontogenetic change over time in a variety of acoustic variables. I will be reanalyzing the descriptive statistics, t-tests, and linear mixed  models for this project.
 
 ###Engler et al. (2017) Table A2: Descriptive measurements
 ```{r}
@@ -568,7 +568,7 @@ t_tests %>%
 
 ### Engler et al. (2017) Table 3: Linear Regressions
 
-####These regressions presented some issues. I looked around quite a bit online, but I couldn't find any code that could reproduce the exact values from Table 3 in Engler et al. (2017). I consulted an incoming postdoc in the Ryan lab, and he confirmed that my R code seemed to be correct given the description in the paper. He also ran a version of the model in JMP and got a set of intermediate values between my R-generated ones and the set from the paper, which were done in SPSS. One thought I had was that perhaps I should have treated the "covariate" differently than the "fixed factor", but I wasn't able to figure out how to successfully employ that in my code. 
+####These regressions presented some issues. I looked around quite a bit online, but I couldn't find any code that could reproduce the exact values from Table 3 in Engler et al. (2017). I consulted an incoming postdoc in the Ryan lab, and he confirmed that my R code seemed to be correct given the description in the paper. He also ran a version of the model in JMP and got a set of intermediate values between my R-generated ones and the set from the paper. (The authors used SPSS.) One thought I had was that perhaps I should have treated the "covariate" differently than the "fixed factor", but I wasn't able to figure out how to successfully employ that in my code. 
 
 ####Barring a few exceptions, the slope directions and orders of magnitude for the other parameters/statics match the paper. But I realize that my results here aren't a true reproduction of this part of the analysis. 
 
